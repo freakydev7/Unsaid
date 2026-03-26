@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>unsaid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#home" aria-label="unsaid home">
+        <span class="brand-mark" aria-hidden="true">
+          <span class="moon"></span>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">unsaid</span>
+          <span class="brand-tag">let it out. quietly.</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="primary">
+        <a class="nav-link" href="#vent">vent</a>
+        <a class="nav-link" href="#mood">mood</a>
+        <a class="nav-link" href="#calm">calm</a>
+        <a class="nav-link" href="#safety">safety</a>
+      </nav>
+
+      <button class="icon-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <span class="icon-bars" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <a class="mobile-link" href="#vent">vent</a>
+      <a class="mobile-link" href="#mood">mood</a>
+      <a class="mobile-link" href="#calm">calm</a>
+      <a class="mobile-link" href="#safety">safety</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="bg-image" aria-hidden="true"></div>
+    <div class="bg-overlay" aria-hidden="true"></div>
+    <div class="bg-grain" aria-hidden="true"></div>
+    <canvas id="particlesCanvas" aria-hidden="true"></canvas>
+    <div class="bg-glow" aria-hidden="true"></div>
+    <section id="home" class="hero scroll-reveal">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <h1 class="hero-title">Because some thoughts are never spoken.</h1>
+          <p class="hero-subtitle">A calm, anonymous space for quiet thoughts — and gentle tracking, one day at a time.</p>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#vent">Write a thought</a>
+            <a class="btn btn-ghost" href="#calm">Play something soft</a>
+            <a class="btn btn-insta" href="https://www.instagram.com/racist.sidd/?hl=en" target="_blank" rel="noopener noreferrer">
+              <span class="insta-icon">📷</span> Follow on Instagram
+            </a>
+          </div>
+
+          <div class="pill-row" aria-label="site qualities">
+            <span class="pill">quiet</span>
+            <span class="pill">private</span>
+            <span class="pill">slow</span>
+            <span class="pill">honest</span>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="mini">
+            <div class="mini-label">a gentle prompt</div>
+            <div class="mini-prompt">What’s been bothering you lately?</div>
+            <div class="mini-hint">No name. No judgement. Just breathe.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vent" class="section scroll-reveal">
+      <div class="section-head">
+        <h2 class="h2">Anonymous Vent Wall</h2>
+        <p class="muted">Write what you can’t say. Keep it private, or let it drift into the public wall.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Send a thought</div>
+          <div class="card-sub">It can be small. It can be heavy. Either way, it belongs somewhere safe.</div>
+
+          <label class="field">
+            <span class="label">Your thought</span>
+            <textarea id="thoughtText" class="textarea" rows="6" placeholder="What’s on your mind?" maxlength="800"></textarea>
+            <div class="field-row">
+              <span id="charCount" class="muted">0/800</span>
+              <button id="clearDraft" class="link-btn" type="button">clear</button>
+            </div>
+          </label>
+
+          <div class="toggle-row">
+            <div class="seg" role="group" aria-label="visibility">
+              <button id="visPrivate" class="seg-btn is-active" type="button">private</button>
+              <button id="visPublic" class="seg-btn" type="button">public</button>
+            </div>
+
+            <label class="switch">
+              <input id="autoDelete" type="checkbox" checked />
+              <span class="track" aria-hidden="true"></span>
+              <span class="switch-text">auto-delete after 24h</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="sendThought" class="btn btn-primary" type="button">Send into the void</button>
+            <button id="releaseThought" class="btn btn-ghost" type="button">Release</button>
+            <button id="savePrivate" class="btn btn-ghost" type="button">Save quietly</button>
+          </div>
+
+          <div class="note muted">No accounts. Stored in your browser only.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Wall</div>
+          <div class="card-sub">Soft, anonymous, and quiet.</div>
+
+          <div class="wall-controls">
+            <div class="seg" role="group" aria-label="wall filter">
+              <button id="wallMine" class="seg-btn is-active" type="button">mine</button>
+              <button id="wallPublic" class="seg-btn" type="button">public</button>
+            </div>
+
+            <button id="clearMine" class="btn btn-soft" type="button">Clear my thoughts</button>
+          </div>
+
+          <div class="wall-status">
+            <div id="firebaseStatus" class="muted">global sync: off</div>
+            <button id="firebaseBtn" class="btn btn-ghost" type="button">Enable global sync</button>
+          </div>
+
+          <div id="wall" class="wall" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mood" class="section scroll-reveal">
+      <div class="section-head">
+        <h2 class="h2">Mood Tracker</h2>
+        <p class="muted">One emoji. One gentle note. No pressure.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">How do you feel today?</div>
+          <div class="emoji-row" role="group" aria-label="mood selection">
+            <button class="emoji-btn" data-mood="happy" type="button">😄<span>happy</span></button>
+            <button class="emoji-btn" data-mood="neutral" type="button">😐<span>neutral</span></button>
+            <button class="emoji-btn" data-mood="sad" type="button">😔<span>sad</span></button>
+            <button class="emoji-btn" data-mood="overwhelmed" type="button">😵<span>overwhelmed</span></button>
+          </div>
+
+          <div class="affirm" id="affirmation">It’s okay to feel this way.</div>
+
+          <div class="mood-meta">
+            <div class="muted" id="moodToday">Today: not logged yet</div>
+            <button id="clearMood" class="btn btn-soft" type="button">Clear mood history</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">This week</div>
+          <div class="chart-wrap">
+            <canvas id="weekChart" width="560" height="280" aria-label="weekly mood chart"></canvas>
+          </div>
+          <div class="muted">A soft overview of the last 7 days.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="calm" class="section scroll-reveal">
+      <div class="section-head">
+        <h2 class="h2">Calm</h2>
+        <p class="muted">Soft sound, soft breath, soft time.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Ambient sounds</div>
+          <div class="card-sub">Generated on-device. No downloads.</div>
+
+          <div class="sound-row">
+            <label class="field">
+              <span class="label">Sound</span>
+              <div class="select-wrap">
+                <select id="soundSelect" class="select">
+                  <option value="rain">rain</option>
+                  <option value="fireplace">fireplace</option>
+                  <option value="night">night city</option>
+                  <option value="silence">silence</option>
+                </select>
+              </div>
+            </label>
+
+            <label class="field">
+              <span class="label">Volume</span>
+              <input id="volume" class="range" type="range" min="0" max="100" value="35" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="toggleSound" class="btn btn-primary" type="button">Play</button>
+            <button id="stopSound" class="btn btn-ghost" type="button">Stop</button>
+          </div>
+
+          <div class="muted" id="soundHint">Tip: start low. let it fade in.</div>
+
+          <div class="divider"></div>
+
+          <div class="card-title">Focus music</div>
+          <div class="card-sub">Use a local track. Add <span class="mono">focus.mp3</span> next to this page or choose a file.</div>
+
+          <audio id="focusAudio" preload="none" loop></audio>
+
+          <div class="sound-row">
+            <label class="field">
+              <span class="label">Track</span>
+              <input id="focusFile" class="file" type="file" accept="audio/*" />
+            </label>
+
+            <label class="field">
+              <span class="label">Volume</span>
+              <input id="focusVolume" class="range" type="range" min="0" max="100" value="30" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="toggleFocus" class="btn btn-primary" type="button">Play</button>
+            <button id="stopFocus" class="btn btn-ghost" type="button">Stop</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Breathing</div>
+          <div class="card-sub">A slow 4–4 rhythm. Inhale. Exhale.</div>
+
+          <div class="breath">
+            <div class="breath-circle" id="breathCircle" aria-hidden="true"></div>
+            <div class="breath-text" id="breathText">ready</div>
+          </div>
+
+          <div class="actions">
+            <button id="startBreath" class="btn btn-primary" type="button">Start</button>
+            <button id="stopBreath" class="btn btn-ghost" type="button">Stop</button>
+          </div>
+
+          <div class="muted" id="breathHint">Nothing to prove. Just be here.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card" data-fidget="rain">
+          <div class="card-title">Rain on glass</div>
+          <div class="card-sub">Drag gently. droplets slide. some fade — letting go.</div>
+          <div class="canvas-wrap">
+            <canvas id="rainCanvas" class="canvas" width="560" height="260" aria-label="rain on glass"></canvas>
+          </div>
+          <div class="muted">If rain sound is playing, it will swell slightly with your touch.</div>
+        </div>
+
+        <div class="card" data-fidget="toggle">
+          <div class="card-title">Infinite soft toggle</div>
+          <div class="card-sub">No purpose. just a slow shift.</div>
+          <div class="toggle-center">
+            <label class="soft-toggle" aria-label="infinite soft toggle">
+              <input id="softToggle" type="checkbox" />
+              <span class="soft-track" aria-hidden="true"></span>
+            </label>
+          </div>
+          <div class="muted">Each toggle changes the background hue and gently changes the sound preset.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card" data-fidget="spiral">
+          <div class="card-title">Slow spiral fidget</div>
+          <div class="card-sub">Wheel / swipe to adjust speed. it never ends.</div>
+          <div class="canvas-wrap">
+            <canvas id="spiralCanvas" class="canvas" width="560" height="260" aria-label="spiral fidget"></canvas>
+          </div>
+          <div class="muted" id="spiralHint">speed: soft</div>
+        </div>
+
+        <div class="card" data-fidget="pebbles">
+          <div class="card-title">Mood pebbles</div>
+          <div class="card-sub">Drag a pebble into the bowl. the bowl changes. the day is logged.</div>
+          <div id="pebblesArea" class="pebbles-area" aria-label="mood pebbles">
+            <div class="pebble" data-mood="happy" aria-label="happy">😄</div>
+            <div class="pebble" data-mood="neutral" aria-label="neutral">😐</div>
+            <div class="pebble" data-mood="sad" aria-label="sad">😔</div>
+            <div class="pebble" data-mood="overwhelmed" aria-label="overwhelmed">😵</div>
+            <div id="moodBowl" class="mood-bowl" aria-label="mood bowl">
+              <div class="bowl-inner"></div>
+              <div class="bowl-label">drop here</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="safety" class="section scroll-reveal">
+      <div class="section-head">
+        <h2 class="h2">Safety</h2>
+        <p class="muted">If you’re in danger or feel like you might harm yourself, please reach out for immediate help.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Crisis support</div>
+          <div class="card-sub">You deserve support right now.</div>
+
+          <div class="safety-links">
+            <a class="btn btn-soft" href="https://findahelpline.com" target="_blank" rel="noreferrer">Find a helpline (global)</a>
+            <a class="btn btn-soft" href="https://www.opencounseling.com/suicide-hotlines" target="_blank" rel="noreferrer">Hotlines (by country)</a>
+          </div>
+
+          <div class="muted">This site can’t provide emergency services.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Privacy note</div>
+          <div class="card-sub">UNSAID (website) stores your entries only in your browser.</div>
+
+          <div class="muted">
+            If you want a true public wall across devices, we can wire it to Firebase later after you’ve installed Node.js.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">unsaid</div>
+        <div class="muted">a safe place for quiet thoughts</div>
+        <div class="footer-credit">
+          <span class="muted">created by </span>
+          <a href="https://www.instagram.com/racist.sidd/?hl=en" target="_blank" rel="noopener noreferrer" class="footer-link">@racist.sidd</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-hidden="true"></div>
+
+  <canvas id="releaseCanvas" class="release-canvas" width="800" height="450" aria-hidden="true"></canvas>
+
+  <div id="fbModal" class="modal" aria-hidden="true">
+    <div class="modal-inner" role="dialog" aria-modal="true" aria-label="Firebase setup">
+      <div class="card-title">Firebase global sync</div>
+      <div class="card-sub">Paste your Firebase config JSON.</div>
+
+      <label class="field">
+        <span class="label">Firebase config</span>
+        <textarea id="fbConfig" class="textarea" rows="8" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","appId":"..."}'></textarea>
+      </label>
+
+      <div class="actions">
+        <button id="fbSave" class="btn btn-primary" type="button">Save</button>
+        <button id="fbCancel" class="btn btn-ghost" type="button">Cancel</button>
+        <button id="fbDisconnect" class="btn btn-soft" type="button">Disable</button>
+      </div>
+
+      <div class="muted">Firestore collection: <span class="mono">public_thoughts</span></div>
+    </div>
+  </div>
+
+  <div id="void" class="void" aria-hidden="true">
+    <body class="page">
+  <div class="bg-gradient-flow" aria-hidden="true"></div>
+  <div class="bg-grain" aria-hidden="true"></div>
+  <canvas id="particlesCanvas" aria-hidden="true"></canvas>
+  <div class="bg-glow" aria-hidden="true"></div>
+      <div class="void-inner">
+        <div class="void-sky" aria-hidden="true"></div>
+        <div class="void-ring" aria-hidden="true"></div>
+        <div class="void-text" id="voidText"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
